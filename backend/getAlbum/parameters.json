@@ -1,0 +1,6 @@
+{
+    "pathParameters": {
+        "album": "$input.path('album')",
+        "year": "$input.path('year')"
+    }
+}
