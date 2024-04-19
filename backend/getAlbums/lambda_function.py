@@ -15,24 +15,48 @@ table = dynamodb.Table(table_name)
 
 def lambda_handler(event, context):
     try:
-        # Get the start parameter from the request
+        # Get the parameters from the request
         start = int(event['queryStringParameters']['start'])
+        count = int(event['queryStringParameters']['count'])
+        sortField = event['queryStringParameters']['sortField']
+        sortOrder = event['queryStringParameters']['sortOrder']
+        searchString = event['queryStringParameters']['searchString']
         
         # Calculate start and end indexes
-        start_index = (start - 1) * 21
-        end_index = start_index + 21
+        start_index = (start - 1) * count
+        end_index = start_index + count
         
-        # Get items from DynamoDB table
+        # Scan the entire table and retrieve all items
         response = table.scan()
         items = response.get('Items', [])
         
-        # Slice the items list to get the desired group of albums
-        group_of_albums = items[start_index:end_index]
+        # Filter items based on the search string
+        filtered_items = items
+        if searchString:
+            filtered_items = [item for item in items if searchString.lower() in item.get('Album', '').lower() or searchString.lower() in item.get('Artist', '').lower()]
         
-        # Return success
+        # Sort filtered items by sortField
+        if sortOrder == 'asc':
+            if sortField == 'Album' or sortField == 'Artist':
+                sorted_items = sorted(filtered_items, key=lambda x: x.get(sortField, '').lower())
+            else:
+                sorted_items = sorted(filtered_items, key=lambda x: x.get(sortField, float('inf')))
+        else:
+            if sortField == 'Album' or sortField == 'Artist':
+                sorted_items = sorted(filtered_items, key=lambda x: x.get(sortField, '').lower(), reverse=True)
+            else:
+                sorted_items = sorted(filtered_items, key=lambda x: x.get(sortField, float('inf')), reverse=True)
+        
+        # Slice the sorted items list to get the desired group of albums
+        group_of_albums = sorted_items[start_index:end_index]
+        
+        # Return success with count and group
         response = {
             'statusCode': 200,
-            'body': json.dumps(group_of_albums, cls=JSONEncoder)
+            'body': json.dumps({
+                'count': len(filtered_items),
+                'group': group_of_albums
+            }, cls=JSONEncoder)
         }
     except Exception as e:
         # Return failure

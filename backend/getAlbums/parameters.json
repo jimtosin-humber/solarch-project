@@ -1,5 +1,9 @@
 {
-    "queryStringParameters": {
-      "start": "$input.params('group')"
-    }
+  "queryStringParameters": {
+    "start": "$input.params('group')",
+    "count": "$input.params('count')",
+    "sortField": "$input.params('sortField')",
+    "sortOrder": "asc",
+    "searchString": "$input.params('searchString')"
+  }
 }

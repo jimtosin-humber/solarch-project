@@ -28,6 +28,11 @@ def lambda_handler(event, context):
         # Return error response
         response = {
             'statusCode': 500,
+            'headers': {
+                'Access-Control-Allow-Headers': 'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST'
+            },
             'body': json.dumps(f'Error deleting item: {str(e)}')
         }
     

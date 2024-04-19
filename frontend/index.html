@@ -45,7 +45,7 @@
 
         <!-- !PAGE CONTENT! -->
         <div class="w3-main" style="margin-left:300px">
-
+            <div id="testDiv"></div>
             <!-- Header -->
             <header id="catalog">
                 <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
@@ -55,14 +55,32 @@
                     <div class="w3-section w3-bottombar w3-padding-16">
                         <!--<button class="w3-button w3-black">ALL</button>-->
                         <button class="w3-button w3-white" onclick="displayGroup(1)"><i class="fa fa-record-vinyl w3-margin-right"></i>Albums</button>
-                        <button class="w3-button w3-white w3-hide-small"><i class="fas fa-user w3-margin-right"></i>Artists</button>
+                        <button class="w3-button w3-white w3-hide-small"><i class="fas fa-user w3-margin-right"></i>Artists (Coming soon!)</button>
                         <button class="w3-button w3-white w3-hide-small"><i class="fas fa-music w3-margin-right"></i>Tracks (Coming soon!)</button>
                     </div>
                 </div>
             </header>
             
-            <div class="w3-margin">
-                <button class="w3-button w3-grey" onclick="displayAddPage()"><i class="fa fa-plus w3-margin-right"></i>Add Album</button>
+            <div id="toolbar" class="w3-margin" style="display:flex">
+                <div style="width:75%">
+                    <button class="w3-button w3-grey" onclick="displayAddPage()"><i class="fa fa-plus w3-margin-right"></i>Add Album</button>
+                </div>
+                <div style="position:relative;top:5px;display:flex">
+                    <div style="position:relative;bottom:2px;margin-right:15px">
+                        <input id="searchBar" type="search" minlength="3" placeholder="Search" class="w3-border-0" style="position:relative;top:2px;padding:2px 10px">
+                    </div>
+                    <div style="margin-top:1px;margin-right:2px">
+                        <i id="sortButton" class="fa-solid fa-arrow-up-wide-short w3-button w3-padding-small" onclick="toggleSort()"></i>
+                    </div>
+                    <div>
+                        <select id="sortSelect" class="w3-container w3-select w3-padding-small">
+                            <option value="Album">Album</option>
+                            <option value="Artist">Artist</option>
+                            <option value="Rank" selected>Rank</option>
+                            <option value="Year">Year</option>
+                        </select>
+                    </div>
+                </div>
             </div>
             
             <!-- Dynamic DIV that contains albums -->
@@ -77,8 +95,9 @@
                     <a onclick="displayGroup(2)" class="w3-bar-item w3-button w3-hover-black">2</a>
                     <a onclick="displayGroup(3)"" class="w3-bar-item w3-button w3-hover-black">3</a>
                     <a onclick="displayGroup(4)" class="w3-bar-item w3-button w3-hover-black">4</a>
+                    <a onclick="displayGroup(5)" class="w3-bar-item w3-button w3-hover-black">5</a>
                     <a onclick="displayGroup(5)" class="w3-bar-item w3-button w3-hover-black">›</a>
-                    <a onclick="displayGroup(26)" class="w3-bar-item w3-button w3-hover-black">»</a>-->
+                    <a onclick="displayGroup(5)" class="w3-bar-item w3-button w3-hover-black">»</a>-->
                 </div>
             </div>
         
